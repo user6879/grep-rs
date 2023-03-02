@@ -1,39 +1,26 @@
+extern crate grep_rs;
+
 use std::env;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::process;
+
+use grep_rs::run;
+use grep_rs::Config;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+    let config = Config::new(&args).unwrap_or_else(|err| {
+        println!("Problem while parsing arguments: {}", err);
+        process::exit(1);
+    });
 
-    if args.len() != 3 {
-        eprintln!("Usage: {} <pattern> <filename>", args[0]);
-        std::process::exit(1);
-    }
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.filename);
 
-    let pattern = &args[1];
-    let filename = &args[2];
+    println!("\n");
 
-    let file = match File::open(filename) {
-        Ok(f) => f,
-        Err(e) => {
-            eprintln!("Error opening file {}: {}", filename, e);
-            std::process::exit(1);
-        }
-    };
+    if let Err(e) = run(config) {
+        println!("Application error: {}", e);
 
-    let reader = BufReader::new(file);
-
-    for line in reader.lines() {
-        let line = match line {
-            Ok(l) => l,
-            Err(e) => {
-                eprintln!("Error reading line from file {}: {}", filename, e);
-                continue;
-            }
-        };
-
-        if line.contains(pattern) {
-            println!("{}", line);
-        }
+        process::exit(1);
     }
 }
