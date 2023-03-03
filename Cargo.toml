@@ -2,6 +2,12 @@
 name = "gr"
 version = "0.1.0"
 edition = "2021"
+authors = ["akumaru <akumaru.senju@gmail.com>"]
+descrtiption = ["gr is a grep alternative written while learning."]
+keywords = ["cli", "grep-rs", "grep", "grep_rs", "gr"]
+repository = "https://github.com/user6879/grep-rs"
+license="MIT"
+readme="README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
