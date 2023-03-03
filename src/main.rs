@@ -1,10 +1,10 @@
-extern crate grep_rs;
+extern crate gr;
 
 use std::env;
 use std::process;
 
-use grep_rs::run;
-use grep_rs::Config;
+use gr::run;
+use gr::Config;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
